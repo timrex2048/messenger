@@ -16,16 +16,14 @@ class ClientMessages:
         if self.get_client_by_username(username):
             return 'Пользователь {} уже существует'.format(username)
         else:
-            new_user = Client(username=username, password=password,
-            info=info)
+            new_user = Client(username=username, password=password, info=info)
             self.dal.session.add(new_user)
             self.dal.session.commit()
             print('Добавлен пользователь: {}'.format(new_user))
 
     def get_client_by_username(self, username):
         """Получение клиента по имени"""
-        client = self.dal.session.query(Client).filter(
-        Client.username == username).first()
+        client = self.dal.session.query(Client).filter(Client.username == username).first()
         return client
 
     def add_client_history(self, client_username, ip_addr='8.8.8.8'):
