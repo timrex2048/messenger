@@ -51,3 +51,4 @@ class Messages(CBase):
     client = relationship("Client", foreign_keys=[client_id])
     contact = relationship("Client", foreign_keys=[contact_id])
     message = Column(Unicode())
+

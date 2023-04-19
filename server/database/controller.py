@@ -5,7 +5,6 @@ from server.database.models import Client, History, Contacts, Messages
 from datetime import datetime
 
 
-
 class ClientMessages:
     def __init__(self, conn_string, base, echo):
         """создать подключение к БД"""

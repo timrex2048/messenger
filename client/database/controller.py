@@ -102,6 +102,7 @@ class ClientMessages:
                 .filter(Client.username == client_username).all()
         return 'Client {} does not exists'.format(client_username)
 
+
     def get_all_clients(self):
         """
         Получение списка всех зарегистрированных пользователей
