@@ -20,7 +20,6 @@ class ClientMessages:
             self.dal.session.add(new_user)
             self.dal.session.commit()
             print('Добавлен пользователь: {}'.format(new_user))
-
     def get_client_by_username(self, username):
         """Получение клиента по имени"""
         client = self.dal.session.query(Client).filter(Client.username == username).first()
