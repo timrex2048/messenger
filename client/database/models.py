@@ -1,9 +1,9 @@
 from datetime import datetime as dt
 from sqlalchemy import ForeignKey, UniqueConstraint
-from sqlalchemy import Column, Integer, String, DateTime, Unicode, Binary, \
-    Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Binary, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Unicode
 
 CBase = declarative_base()
 
@@ -18,12 +18,6 @@ class Client(CBase):
     info = Column(String(255), default='')
     online_status = Column(Boolean(), default=False)
 
-    def __repr__(self):
-        return "Client(" \
-               "id='{self.id}'," \
-               "username='{self.username}'," \
-               "information='{self.info}')".format(self=self)
-
 
 class History(CBase):
     """Таблица с историей входов клиентов"""
@@ -36,29 +30,19 @@ class History(CBase):
     client = relationship('Client',
                           backref=backref('history', order_by=client_id))
 
-    def __repr__(self):
-        return "History(" \
-               "client='{self.client}'," \
-               "entrance_time='{self.time}'," \
-               "ip_address='{self.ip_addr}')".format(self=self)
-
 
 class Contacts(CBase):
     """Таблица с контактами(друзьями) клиента"""
     __tablename__ = 'contacts'
     __table_args__ = (
-    UniqueConstraint('client_id', 'contact_id', name='unique_contact'),)
+        UniqueConstraint('client_id', 'contact_id',
+                         name='unique_contact'),)
 
     id = Column(Integer(), primary_key=True)
     client_id = Column(Integer(), ForeignKey('client.id'))
     contact_id = Column(Integer(), ForeignKey('client.id'))
     client = relationship("Client", foreign_keys=[client_id])
     contact = relationship("Client", foreign_keys=[contact_id])
-
-    def __repr__(self):
-        return "Contacts(" \
-               "client_username='{self.client.username}'," \
-               "contact_username='{self.contact.username}')".format(self=self)
 
 
 class Messages(CBase):
